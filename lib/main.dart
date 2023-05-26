@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:technewsagg/screens/home_screen.dart';
-import 'package:technewsagg/screens/welcome_screen.dart';
 import 'package:logging/logging.dart';
+import 'package:provider/provider.dart';
+import 'package:technewsagg/models/settings.dart';
+import 'package:technewsagg/models/store.dart';
+import 'package:technewsagg/providers/article.dart';
+import 'package:technewsagg/providers/subscriptions.dart';
+import 'package:technewsagg/providers/user.dart';
+
+import 'package:technewsagg/screens/home_screen.dart';
+import 'package:technewsagg/screens/select_user_screen.dart';
+import 'package:technewsagg/screens/welcome_screen.dart';
 
 void initLogger() {
   Logger.root.level = Level.ALL;
@@ -11,9 +18,25 @@ void initLogger() {
   });
 }
 
-void main() {
+Future<void> initApp() async {
+  WidgetsFlutterBinding.ensureInitialized();
   initLogger();
-  runApp(TechNewsAgg());
+  Logger.root.info('Initializing app');
+  if ((await Store.get('settings')).isEmpty) {
+    await Store.set('settings', Settings.getDefaultSettings().toJson());
+  }
+}
+
+Future<void> main() async {
+  await initApp();
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => SubscriptionsProvider()),
+      ChangeNotifierProvider(create: (context) => UserProvider()),
+      ChangeNotifierProvider(create: (context) => ArticleProvider()),
+    ],
+    child: TechNewsAgg(),
+  ));
 }
 
 class TechNewsAgg extends StatelessWidget {
@@ -24,13 +47,16 @@ class TechNewsAgg extends StatelessWidget {
     return MaterialApp(
       title: 'TechNewsAgg',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.green,
+        scaffoldBackgroundColor: Colors.white,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const WelcomeScreen(),
-        '/home': (context) => const HomeScreen()
-      },
+      home: FutureBuilder(
+        future: context.read<UserProvider>().isFirstTime(),
+        builder: (context, snapshot) => snapshot.data == true
+            ? const SelectUserScreen()
+            : const WelcomeScreen(),
+      ),
     );
   }
 }

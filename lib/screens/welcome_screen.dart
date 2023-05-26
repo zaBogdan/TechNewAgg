@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:technewsagg/screens/home_screen.dart';
+import 'package:technewsagg/screens/select_user_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -51,7 +50,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HomeScreen(),
+                    builder: (context) => const SelectUserScreen(),
                   ),
                 );
               },
