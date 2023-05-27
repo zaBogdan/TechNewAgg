@@ -51,12 +51,7 @@ class TechNewsAgg extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: FutureBuilder(
-        future: context.read<UserProvider>().isFirstTime(),
-        builder: (context, snapshot) => snapshot.data == true
-            ? const SelectUserScreen()
-            : const WelcomeScreen(),
-      ),
+      home: const WelcomeScreen(),
     );
   }
 }
