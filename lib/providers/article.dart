@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:technewsagg/api/client.dart';
 import 'package:technewsagg/models/article.dart';
+import 'package:technewsagg/models/user.dart';
+import 'package:technewsagg/providers/user.dart';
 
 class ArticleProvider extends ChangeNotifier {
-  List<Article> _articles = [];
-
-  List<Article> get articles => _articles;
-
-  set articles(List<Article> articles) {
-    _articles = articles;
-    notifyListeners();
+  Future<List<ResponseType>> getArticlesForUserFeeds(User currentUser) async {
+    List<String> feedNames = currentUser.websites.toList();
+    return await RSSClient.getArticlesForUserFeeds(feedNames);
   }
 }

@@ -13,7 +13,8 @@ class UserProvider extends ChangeNotifier {
 
   Future<List<User>> _fetchUsers() async {
     final users = await Store.get("users");
-    if (users != null) {
+    print(users);
+    if (users.runtimeType == List) {
       return (users as List).map((e) => User.fromJson(e)).toList();
     }
     return [];

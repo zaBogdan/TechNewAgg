@@ -1,7 +1,7 @@
 class Article {
-  final String title;
+  String title;
   final String imageUrl;
-  final String description;
+  String description;
   final String url;
 
   Article({
@@ -9,5 +9,8 @@ class Article {
     required this.imageUrl,
     required this.description,
     required this.url,
-  });
+  }) {
+    description = description.trim();
+    title = title.trim();
+  }
 }

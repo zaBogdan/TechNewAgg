@@ -3,6 +3,8 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:technewsagg/models/article.dart';
+import 'package:technewsagg/providers/article.dart';
+import 'package:technewsagg/providers/user.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -68,19 +70,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text(
                                   articles[index].title,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.grey[800],
-                                  ),
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 Container(height: 10),
                                 Text(
                                   articles[index].description,
                                   textAlign: TextAlign.left,
                                   overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
+                                  maxLines: 3,
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 12,
                                     color: Colors.grey[700],
                                   ),
                                 ),
@@ -142,75 +146,33 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // Implement your main app interface here
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Tech News App',
-          style: TextStyle(color: Colors.black),
+        appBar: AppBar(
+          title: const Text(
+            'All your feeds',
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(color: Colors.black),
+          elevation: 0,
         ),
-        backgroundColor: Colors.transparent,
-        iconTheme: const IconThemeData(color: Colors.black),
-        elevation: 0,
-      ),
-      body: Column(children: [
-        _newsPerCategory('Recommended for your', <Article>[
-          Article(
-              title:
-                  'Jimmy Uso calls himself The Tribal Chief before brawling with Sami Zayn, KO and The Bloodline',
-              imageUrl:
-                  'https://static-media.fox.com/ms/stg1/sports/play-66adddc94000c21--Bloodline_KO_Samii_mp4_00_06_38_07_Still002_1685161535779.jpg',
-              description:
-                  'Jimmy Uso shocked the WWE Universe and The Bloodline alike when he called himself The Tribal Chief while in a war of words with The Undisputed Tag Team Champions Sami Zayn and Kevin Owens on Friday Night SmackDown.',
-              url: 'https://www.foxsports.com/watch/play-66adddc94000c21'),
-          Article(
-              title:
-                  'Jimmy Uso calls himself The Tribal Chief before brawling with Sami Zayn, KO and The Bloodline',
-              imageUrl:
-                  'https://static-media.fox.com/ms/stg1/sports/play-66adddc94000c21--Bloodline_KO_Samii_mp4_00_06_38_07_Still002_1685161535779.jpg',
-              description:
-                  'Jimmy Uso shocked the WWE Universe and The Bloodline alike when he called himself The Tribal Chief while in a war of words with The Undisputed Tag Team Champions Sami Zayn and Kevin Owens on Friday Night SmackDown.',
-              url: 'https://www.foxsports.com/watch/play-66adddc94000c21'),
-          Article(
-              title:
-                  'Jimmy Uso calls himself The Tribal Chief before brawling with Sami Zayn, KO and The Bloodline',
-              imageUrl:
-                  'https://static-media.fox.com/ms/stg1/sports/play-66adddc94000c21--Bloodline_KO_Samii_mp4_00_06_38_07_Still002_1685161535779.jpg',
-              description:
-                  'Jimmy Uso shocked the WWE Universe and The Bloodline alike when he called himself The Tribal Chief while in a war of words with The Undisputed Tag Team Champions Sami Zayn and Kevin Owens on Friday Night SmackDown.',
-              url: 'https://www.foxsports.com/watch/play-66adddc94000c21'),
-          Article(
-              title:
-                  'Jimmy Uso calls himself The Tribal Chief before brawling with Sami Zayn, KO and The Bloodline',
-              imageUrl:
-                  'https://static-media.fox.com/ms/stg1/sports/play-66adddc94000c21--Bloodline_KO_Samii_mp4_00_06_38_07_Still002_1685161535779.jpg',
-              description:
-                  'Jimmy Uso shocked the WWE Universe and The Bloodline alike when he called himself The Tribal Chief while in a war of words with The Undisputed Tag Team Champions Sami Zayn and Kevin Owens on Friday Night SmackDown.',
-              url: 'https://www.foxsports.com/watch/play-66adddc94000c21'),
-          Article(
-              title:
-                  'Jimmy Uso calls himself The Tribal Chief before brawling with Sami Zayn, KO and The Bloodline',
-              imageUrl:
-                  'https://static-media.fox.com/ms/stg1/sports/play-66adddc94000c21--Bloodline_KO_Samii_mp4_00_06_38_07_Still002_1685161535779.jpg',
-              description:
-                  'Jimmy Uso shocked the WWE Universe and The Bloodline alike when he called himself The Tribal Chief while in a war of words with The Undisputed Tag Team Champions Sami Zayn and Kevin Owens on Friday Night SmackDown.',
-              url: 'https://www.foxsports.com/watch/play-66adddc94000c21'),
-          Article(
-              title:
-                  'Jimmy Uso calls himself The Tribal Chief before brawling with Sami Zayn, KO and The Bloodline',
-              imageUrl:
-                  'https://static-media.fox.com/ms/stg1/sports/play-66adddc94000c21--Bloodline_KO_Samii_mp4_00_06_38_07_Still002_1685161535779.jpg',
-              description:
-                  'Jimmy Uso shocked the WWE Universe and The Bloodline alike when he called himself The Tribal Chief while in a war of words with The Undisputed Tag Team Champions Sami Zayn and Kevin Owens on Friday Night SmackDown.',
-              url: 'https://www.foxsports.com/watch/play-66adddc94000c21'),
-          Article(
-              title:
-                  'Jimmy Uso calls himself The Tribal Chief before brawling with Sami Zayn, KO and The Bloodline',
-              imageUrl:
-                  'https://static-media.fox.com/ms/stg1/sports/play-66adddc94000c21--Bloodline_KO_Samii_mp4_00_06_38_07_Still002_1685161535779.jpg',
-              description:
-                  'Jimmy Uso shocked the WWE Universe and The Bloodline alike when he called himself The Tribal Chief while in a war of words with The Undisputed Tag Team Champions Sami Zayn and Kevin Owens on Friday Night SmackDown.',
-              url: 'https://www.foxsports.com/watch/play-66adddc94000c21'),
-        ]),
-      ]),
-    );
+        body: FutureBuilder(
+          future: context.read<ArticleProvider>().getArticlesForUserFeeds(
+              context.read<UserProvider>().currentUser!),
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * 0.85,
+              child: ListView(
+                children: snapshot.data!
+                    .map((e) => _newsPerCategory(e.name, e.articles))
+                    .toList(),
+              ),
+            );
+          },
+        ));
   }
 }

@@ -178,8 +178,16 @@ class _ProfileManagerScreenState extends State<ProfileManagerScreen> {
                           await context.read<UserProvider>().save(_currentUser);
                       if (response) {
                         Logger.root.info("User successfully saved");
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text('User successfully created'),
+                        ));
                       } else {
                         Logger.root.severe("User not saved");
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text('Failed to create user'),
+                        ));
                       }
                       backToSelectUsers();
                     },
@@ -196,8 +204,16 @@ class _ProfileManagerScreenState extends State<ProfileManagerScreen> {
                               .save(_currentUser);
                           if (response) {
                             Logger.root.info("User successfully updated");
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('User successfully updated'),
+                            ));
                           } else {
                             Logger.root.severe("Failed to update user");
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text('Failed to update user'),
+                            ));
                           }
                           backToSelectUsers();
                         },
