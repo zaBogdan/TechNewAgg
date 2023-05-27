@@ -21,6 +21,26 @@ class RSSFeeds {
         name: 'VICE US',
         url: 'https://www.vice.com/en/rss?locale=en_us',
         fieldsLocation: FieldsLocation(imageUrl: 'enclosure')),
+    Feed(
+        name: 'The Next Web',
+        url: 'http://feeds2.feedburner.com/TheNextWeb',
+        fieldsLocation: FieldsLocation(imageUrl: 'enclosure')),
+    Feed(
+        name: 'NASA Breaking News',
+        url: 'https://www.nasa.gov/rss/dyn/breaking_news.rss',
+        fieldsLocation: FieldsLocation(imageUrl: 'enclosure')),
+    Feed(
+        name: 'New york times',
+        url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+        fieldsLocation: FieldsLocation(imageUrl: 'media:content')),
+    Feed(
+        name: 'Political news on Fox News',
+        url: 'https://moxie.foxnews.com/google-publisher/politics.xml',
+        fieldsLocation: FieldsLocation(imageUrl: 'media:content', url: 'guid')),
+    Feed(
+        name: 'Smashing Magazine',
+        url: 'https://www.smashingmagazine.com/feed/',
+        fieldsLocation: FieldsLocation(imageUrl: 'enclosure', url: 'guid'))
   ];
 
   List<String> get feedNames => feeds.map((feed) => feed.name).toList();
