@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
+import 'package:technewsagg/api/rss_feeds.dart';
 import 'package:technewsagg/models/user.dart';
 
 import 'package:technewsagg/providers/user.dart';
@@ -29,20 +30,12 @@ class _ProfileManagerScreenState extends State<ProfileManagerScreen> {
     'eyes.jpg'
   ];
 
-  List<Map<String, dynamic>> websiteList = [
-    {
-      'name': 'Twitter',
+  List<Map<String, dynamic>> websiteList = RSSFeeds().feedNames.map((e) {
+    return {
+      'name': e,
       'selected': false,
-    },
-    {
-      'name': 'Facebook',
-      'selected': false,
-    },
-    {
-      'name': 'Instagram',
-      'selected': false,
-    }
-  ];
+    };
+  }).toList();
 
   @override
   void initState() {
@@ -76,16 +69,14 @@ class _ProfileManagerScreenState extends State<ProfileManagerScreen> {
 
     return Scaffold(
         appBar: AppBar(
-            title: Text(
-              widget.isNew ? 'Your new profile' : 'Edit profile',
-              style: const TextStyle(color: Colors.black),
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            iconTheme: const IconThemeData(color: Colors.black),
-            actions: !widget.isNew
-                ? [IconButton(onPressed: () {}, icon: const Icon(Icons.add))]
-                : []),
+          title: Text(
+            widget.isNew ? 'Your new profile' : 'Edit profile',
+            style: const TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: Colors.black),
+        ),
         body: Form(
           key: _formKey,
           child: Column(
@@ -164,19 +155,21 @@ class _ProfileManagerScreenState extends State<ProfileManagerScreen> {
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   )),
-              Column(
-                children: websiteList
-                    .map((option) => CheckboxListTile(
-                          title: Text(option['name']),
-                          value: option['selected'],
-                          onChanged: (value) {
-                            setState(() {
-                              option['selected'] = value;
-                            });
-                          },
-                        ))
-                    .toList(),
-              ),
+              SizedBox(
+                  height: 250,
+                  child: ListView(
+                    children: websiteList
+                        .map((option) => CheckboxListTile(
+                              title: Text(option['name']),
+                              value: option['selected'],
+                              onChanged: (value) {
+                                setState(() {
+                                  option['selected'] = value;
+                                });
+                              },
+                            ))
+                        .toList(),
+                  )),
               if (widget.isNew)
                 TextButton(
                     onPressed: () async {
